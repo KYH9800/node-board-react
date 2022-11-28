@@ -23,6 +23,9 @@ export const PostsWrapper = styled.div`
     text-align: center;
     margin: auto;
 
+    border-spacing: 0px;
+    border-collapse: separate;
+
     td {
       border: solid 1px black;
     }
