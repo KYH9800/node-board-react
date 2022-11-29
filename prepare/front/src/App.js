@@ -12,15 +12,15 @@ const App = () => {
   const [posts, setPosts] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  console.log('posts: ', posts);
-  console.log('error:', error);
-  console.log('loading: ', loading);
+  // console.log('posts: ', posts); // console.log('error:', error); // console.log('loading: ', loading);
+  const [postId, setPostId] = useState('');
+  console.log('postId in App', postId);
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       setError(null); // 요청이 시작 할 때에는 error 를 초기화
       setPosts(null); // 요청이 시작 할 때 users 를 초기화
@@ -31,7 +31,7 @@ const App = () => {
       setError(err);
     }
     setLoading(false);
-  };
+  }, [posts, error, loading]);
 
   if (loading) return <div>로딩중..</div>;
   if (error) return <div>에러가 발생했습니다</div>;
@@ -41,8 +41,8 @@ const App = () => {
     <AppTag>
       <Header />
       <Routes>
-        <Route path="/" element={<Posts />} />
-        <Route path="/addPost" element={<AddPost posts={posts} />} />
+        <Route path="/" element={<Posts posts={posts.posts} setPostId={setPostId} />} />
+        <Route path="/addPost" element={<AddPost />} />
       </Routes>
     </AppTag>
   );

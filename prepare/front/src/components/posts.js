@@ -1,13 +1,19 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PostsWrapper } from '../styles/PostsStyled';
 
-const Posts = ({ posts }) => {
+const Posts = ({ posts, setPostId }) => {
+  // console.log('props posts: ', posts);
   const navigate = useNavigate();
-  console.log('add posts: ', posts);
 
   const onClickBtn = () => {
-    console.log('click');
     navigate('/addPost');
+    // console.log('click');
+  };
+
+  const onClickReadPage = (postId) => () => {
+    setPostId(postId);
+    // console.log('postId in Posts: ', postId);
   };
 
   return (
@@ -24,16 +30,16 @@ const Posts = ({ posts }) => {
             <td>작성일</td>
           </tr>
         </thead>
-        {/* {posts.posts.map((post, idx) => (
+        {posts.map((post, idx) => (
           <tbody key={post._id}>
-            <tr>
+            <tr onClick={onClickReadPage(post._id)}>
               <td>{idx + 1}</td>
               <td>{post.user}</td>
-              <td>{post.title}</td>
+              <td className="titleTd">{post.title}</td>
               <td>{post.createdAt.slice(0, 10)}</td>
             </tr>
           </tbody>
-        ))} */}
+        ))}
       </table>
     </PostsWrapper>
   );
